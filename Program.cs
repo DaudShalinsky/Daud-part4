@@ -1,1 +1,1 @@
-﻿LogAnalyzer.Start();
+﻿ReviewAnalyzer.Start();

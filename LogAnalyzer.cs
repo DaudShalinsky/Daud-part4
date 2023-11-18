@@ -14,13 +14,8 @@ public class LogAnalyzer
                                         "2023-11-12 11:30:00 INFO Scheduled maintenance started",
                                         "2023-11-12 12:00:00 ERROR Email service is not responding",
                                         "2023-11-12 12:30:45 WARNING High CPU usage detected"
-                                    };
+                                     };
 
-        //  "2023-11-12  08:30:00 INFO Application started successfully",
-        //  dateStartIndex = 0;
-        //  dateEndIndex = 10
-        //  problesh = 2
-        //  timeStartIndex = 12
         foreach (string log in logs)
         {
             string date;
@@ -48,14 +43,6 @@ public class LogAnalyzer
 
             message = log.Substring(messageStartIndex);
             Console.WriteLine($"Дата: {date}, Время: {time}, Уровень: {(level + ",").PadRight(8)} Сообщение: {message}.");
-
-
-
-
-
-
-
-
         }
     }
 }
