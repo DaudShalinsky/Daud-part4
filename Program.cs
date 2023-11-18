@@ -1,1 +1,1 @@
-﻿LogAnalyzer.Start();
+﻿WeatherJournal.Start();
