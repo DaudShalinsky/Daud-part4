@@ -1,8 +1,29 @@
+using Microsoft.VisualBasic.FileIO;
+
 public class WeatherJournal
 {
+    const string PATH = @"Weather.txt";
+    const string DATE_FORMAT = "dd.MM.yyyy";
+
+    private static DateTime GetDate ()
+    {
+        Console.Write("Дата: ");
+        string? rawDate = Console.ReadLine();
+        DateTime date;
+        bool dateOk = DateTime.TryParse(rawDate, out date);
+
+        if (dateOk == false)
+        {
+            return GetDate();
+        }
+        return date;
+    }
+
+
     private static int? SelectMode()
     {
         // Просим ввести
+        Console.Clear();
         Console.WriteLine("Выберите режим: ");
         Console.WriteLine("1 - Чтение");
         Console.WriteLine("2 - Запись");
@@ -30,8 +51,6 @@ public class WeatherJournal
 
     public static void Start()
     {
-        const string path = @"C:\Users\GROZNY\OneDrive\Рабочий стол\C#\Проекты\Daud-Part4\Погода\Weather.txt";
-
         // Выбор режима
         int? mode = SelectMode();
 
@@ -40,8 +59,19 @@ public class WeatherJournal
             case 1:
                 Console.WriteLine("Введите дату:");
                 string? selectedDate = Console.ReadLine();
+                string? contents;
+                try
+                {
+                    contents = File.ReadAllText(PATH);
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("Не удалось прочитать файл, проверь свой компьютер, очисти от пыли");
+                    Console.ReadKey();
+                    Start();
+                    return;
+                }
 
-                string contents = File.ReadAllText(path);
                 string[] entries = contents.Split("\r\n");
 
                 bool found = false;
@@ -70,9 +100,8 @@ public class WeatherJournal
             case 2:
                 Console.WriteLine("Введите информацию о погоде:");
 
-                Console.Write("Дата: ");
-                string? date = Console.ReadLine();
-
+                DateTime date = GetDate();
+            
                 Console.Write("Температура: ");
                 string? temperature = Console.ReadLine();
 
@@ -92,7 +121,7 @@ public class WeatherJournal
 
                 try
                 {
-                    File.AppendAllText(path, $"{date} {temperature} {humidity} {description}\r\n");
+                    File.AppendAllText(PATH, $"{date.ToString(DATE_FORMAT)} {temperature} {humidity} {description}\r\n");
                 }
                 catch (UnauthorizedAccessException)
                 {
