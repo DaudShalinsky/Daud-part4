@@ -1,8 +1,7 @@
-using System.Collections.Specialized;
-using System.ComponentModel.Design;
-
 public static class ReviewAnalyzer
 {
+     
+
 
     private static bool CheckForPozitivity(string review)
     {
