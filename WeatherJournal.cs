@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Microsoft.VisualBasic.FileIO;
 
 public class WeatherJournal
@@ -5,7 +6,7 @@ public class WeatherJournal
     const string PATH = @"Weather.txt";
     const string DATE_FORMAT = "dd.MM.yyyy";
 
-    private static DateTime GetDate ()
+    private static DateTime GetDate()
     {
         Console.Write("Дата: ");
         string? rawDate = Console.ReadLine();
@@ -19,6 +20,38 @@ public class WeatherJournal
         return date;
     }
 
+    private static decimal GetTemperature()
+    {
+        Console.Write("Температура: ");
+        decimal temperature;
+
+        try
+        {
+            temperature = Convert.ToDecimal(Console.ReadLine());
+        }
+        catch (Exception)
+        {
+            return GetTemperature();
+        }
+        return temperature;
+    }
+
+    private static decimal GetHumidity()
+    {
+        Console.Write("Влажность: ");
+
+        decimal humidity;
+
+        try
+        {
+            humidity = Convert.ToDecimal(Console.ReadLine());
+        }
+        catch (Exception)
+        {
+            return GetHumidity();
+        }
+        return humidity;
+    }
 
     private static int? SelectMode()
     {
@@ -49,6 +82,28 @@ public class WeatherJournal
         }
     }
 
+    private static string GetDiscription()
+    {
+        Console.Write("Описание: ");
+        string? description = Console.ReadLine();
+
+        bool flajok = false;
+
+        string[] descriptionWords = { "солнечно", "облачно", "дождь", "снег", "туман" };
+
+        //foreach (string word in descriptionWords)
+        //{
+        if (descriptionWords.Contains(description.ToLower()))
+        {
+            return description;
+        }
+        else
+        {
+            return GetDiscription();
+        }
+        // }
+
+    }
     public static void Start()
     {
         // Выбор режима
@@ -101,23 +156,12 @@ public class WeatherJournal
                 Console.WriteLine("Введите информацию о погоде:");
 
                 DateTime date = GetDate();
-            
-                Console.Write("Температура: ");
-                string? temperature = Console.ReadLine();
 
-                Console.Write("Влажность: ");
-                string? humidity = Console.ReadLine();
+                decimal temperature = GetTemperature();
 
-                Console.Write("Описание: ");
-                string? description = Console.ReadLine();
+                decimal humidity = GetHumidity();
 
-                /*
-                    1. определить путь
-                    2. создать или открыть файл
-                    3. записать данные в формате:
-                        11.11.2012 30 45 Солнечно
-                        12.11.2012 30 45 Дождь
-                */
+                string description = GetDiscription();
 
                 try
                 {
